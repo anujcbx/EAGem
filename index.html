@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,9 +87,7 @@ h1{font-size:32px;margin:6px 0}.lead{color:var(--muted);max-width:800px;line-hei
     <div class="nav-title">Gem Builder</div>
     <button onclick="showDetail('gemguide')">🧩 Prompt Guide — Create Different Gems</button>
     <button onclick="showDetail('scenarios')">🎯 Real-World EA Scenarios</button>
-    <div class="nav-title">Resources</div>
-    <button onclick="showDetail('best')">⭐ Best Practices</button>
-    <button onclick="showDetail('plan')">📆 30-Day Implementation</button>
+
   </div>
 </aside>
 
@@ -117,8 +114,267 @@ h1{font-size:32px;margin:6px 0}.lead{color:var(--muted);max-width:800px;line-hei
   <div id="detailContent"></div>
 </section>
 
-<section id="fundamentals" class="section"><div class="resource"><h2>EA + AI Fundamentals</h2><p>Learn the difference between asking Gemini a question and building a repeatable workflow. The goal is to reduce repetitive work while keeping the EA responsible for accuracy, confidentiality and final decisions.</p><h3>EA rule</h3><ul><li>AI drafts and structures; the EA reviews and decides what is sent.</li><li>Never invent names, dates, amounts, approvals or commitments.</li><li>Use company-approved information and avoid sharing confidential information unless permitted.</li></ul></div></section>
-<section id="gemini" class="section"><div class="resource"><h2>Gemini & Skills</h2><p>Gemini Skills are reusable instructions that teach Gemini how to perform a recurring workflow. Google says Skills can be used automatically when relevant or explicitly selected, and multiple Skills can be combined.</p><h3>EA practice</h3><ol><li>Create or receive the approved EA Skills.</li><li>Use the skill when doing the matching task.</li><li>Give Gemini the real context: email, notes, agenda, data or document.</li><li>Review the output before using it.</li></ol></div></section>
+<section id="fundamentals" class="section">
+<div style="max-width:960px">
+  <div class="eyebrow">Foundation Module</div>
+  <h1 style="font-size:30px;margin:8px 0 6px">EA + AI Fundamentals</h1>
+  <p style="color:var(--muted);line-height:1.6;margin-bottom:28px">Everything shifts when an EA stops typing from scratch and starts directing AI. This module gives you the mental model, the rules, and the confidence to use Gemini the right way — every day.</p>
+
+  <!-- The Big Shift -->
+  <div style="background:linear-gradient(135deg,#a91f23,#c62828);border-radius:18px;padding:28px 32px;color:#fff;margin-bottom:22px">
+    <div style="font-size:11px;font-weight:800;letter-spacing:1.4px;opacity:.75;text-transform:uppercase;margin-bottom:10px">The Big Shift</div>
+    <h2 style="margin:0 0 14px;font-size:22px">You are not a typist anymore. You are a director.</h2>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-top:18px">
+      <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:16px">
+        <div style="font-size:10px;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Before AI</div>
+        <div style="font-size:13px;line-height:1.6">Write every email from scratch · Re-read entire threads · Format notes manually · Search for templates · Guess priority</div>
+      </div>
+      <div style="font-size:28px;opacity:.6">→</div>
+      <div style="background:rgba(255,255,255,.2);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.3)">
+        <div style="font-size:10px;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">With Gemini</div>
+        <div style="font-size:13px;line-height:1.6">Brief Gemini · Review the draft · Verify facts · Edit tone · Send with confidence</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 Laws -->
+  <div style="margin-bottom:22px">
+    <h3 style="font-size:17px;margin-bottom:14px">⚖️ The 3 Unbreakable EA-AI Rules</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;border-top:4px solid var(--red)">
+        <div style="font-size:28px;margin-bottom:10px">🧠</div>
+        <div style="font-weight:800;font-size:15px;margin-bottom:8px">AI drafts. You decide.</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Gemini produces structure and language. You decide what gets sent, approved, or escalated. Never bypass your own judgement.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;border-top:4px solid var(--orange)">
+        <div style="font-size:28px;margin-bottom:10px">🔍</div>
+        <div style="font-weight:800;font-size:15px;margin-bottom:8px">Verify every fact.</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Names, amounts, dates, approvals — always cross-check against the original source. Gemini can hallucinate. You cannot afford to.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;border-top:4px solid var(--blue)">
+        <div style="font-size:28px;margin-bottom:10px">🔒</div>
+        <div style="font-weight:800;font-size:15px;margin-bottom:8px">Protect confidentiality.</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Only share information that is permitted by company policy. Never paste sensitive personal, financial, or strategic data into AI unless authorized.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- What AI can and cannot do -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px">
+    <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px">
+      <h3 style="margin:0 0 14px;font-size:15px;color:var(--green)">✅ What Gemini does brilliantly</h3>
+      <ul style="padding-left:18px;font-size:13px;line-height:1.9;color:#333;margin:0">
+        <li>Summarize long emails and threads</li>
+        <li>Draft professional replies in seconds</li>
+        <li>Structure MOM from rough notes</li>
+        <li>Extract action items with owners</li>
+        <li>Rewrite unclear messages with better tone</li>
+        <li>Create agendas, briefs, and trackers</li>
+        <li>Prioritize tasks using logic you provide</li>
+        <li>Format any data into tables or reports</li>
+      </ul>
+    </div>
+    <div style="background:#fff3f3;border:1px solid #f0dada;border-radius:14px;padding:20px">
+      <h3 style="margin:0 0 14px;font-size:15px;color:var(--red)">⚠️ What Gemini cannot replace</h3>
+      <ul style="padding-left:18px;font-size:13px;line-height:1.9;color:#333;margin:0">
+        <li>Reading the room in a meeting</li>
+        <li>Knowing which executive is sensitive about what</li>
+        <li>Making an approval decision</li>
+        <li>Verifying whether a vendor is trustworthy</li>
+        <li>Knowing unwritten company rules</li>
+        <li>Handling a crisis with human empathy</li>
+        <li>Taking responsibility for a sent message</li>
+        <li>Protecting relationships — that is always you</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prompt quality -->
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px">
+    <h3 style="margin:0 0 16px;font-size:16px">🎯 The Anatomy of a Great EA Prompt</h3>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;text-align:center">
+      <div style="background:#f6f7f9;border-radius:10px;padding:12px 8px">
+        <div style="font-size:20px;margin-bottom:6px">🎭</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:4px">Role</div>
+        <div style="font-size:11px;color:var(--muted)">Tell Gemini what it is acting as</div>
+      </div>
+      <div style="background:#f6f7f9;border-radius:10px;padding:12px 8px">
+        <div style="font-size:20px;margin-bottom:6px">🎯</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:4px">Task</div>
+        <div style="font-size:11px;color:var(--muted)">One clear action to perform</div>
+      </div>
+      <div style="background:#f6f7f9;border-radius:10px;padding:12px 8px">
+        <div style="font-size:20px;margin-bottom:6px">📋</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:4px">Context</div>
+        <div style="font-size:11px;color:var(--muted)">Paste the real email / notes / data</div>
+      </div>
+      <div style="background:#f6f7f9;border-radius:10px;padding:12px 8px">
+        <div style="font-size:20px;margin-bottom:6px">📐</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:4px">Format</div>
+        <div style="font-size:11px;color:var(--muted)">Table / bullets / email / summary</div>
+      </div>
+      <div style="background:#f6f7f9;border-radius:10px;padding:12px 8px">
+        <div style="font-size:20px;margin-bottom:6px">🚫</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:4px">Constraints</div>
+        <div style="font-size:11px;color:var(--muted)">What NOT to invent or assume</div>
+      </div>
+    </div>
+    <div style="background:#202124;color:#f5f5f5;border-radius:10px;padding:16px;margin-top:16px;font-size:12px;line-height:1.7">
+      <span style="color:#ef5350;font-weight:700">ROLE:</span> You are an Executive Assistant Email Manager.<br>
+      <span style="color:#ef5350;font-weight:700">TASK:</span> Summarize the email thread and extract the action required.<br>
+      <span style="color:#ef5350;font-weight:700">CONTEXT:</span> [PASTE EMAIL THREAD HERE]<br>
+      <span style="color:#ef5350;font-weight:700">FORMAT:</span> 1-line summary · Action required · Owner · Deadline · Decision needed<br>
+      <span style="color:#ef5350;font-weight:700">CONSTRAINT:</span> Do not invent names, amounts, or deadlines. Mark missing info clearly.
+    </div>
+  </div>
+
+  <!-- Mindset -->
+  <div style="background:#fff7f7;border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:18px 22px">
+    <b style="font-size:14px">EA Mindset Check</b>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.7;color:#444">The best EAs who use AI don't become lazy — they become faster and more strategic. They use the time saved on drafting to do what AI cannot: build relationships, anticipate problems, and exercise real professional judgement. Gemini is your engine. You are still the driver.</p>
+  </div>
+</div>
+</section>
+<section id="gemini" class="section">
+<div style="max-width:960px">
+  <div class="eyebrow">Tool Mastery</div>
+  <h1 style="font-size:30px;margin:8px 0 6px">Gemini & Skills — Your AI Toolkit</h1>
+  <p style="color:var(--muted);line-height:1.6;margin-bottom:28px">Gemini is not just a chatbot. When you understand its layers — chat, Skills, and Gems — you unlock a system that handles recurring EA work automatically, consistently, and fast.</p>
+
+  <!-- The 3 Layers -->
+  <div style="margin-bottom:24px">
+    <h3 style="font-size:17px;margin-bottom:16px">🧱 The 3 Layers of Gemini for EAs</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:#4285f4"></div>
+        <div style="font-size:32px;margin-bottom:10px">💬</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:6px">Layer 1 — Chat</div>
+        <div style="font-size:11px;color:var(--blue);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.8px">One-off tasks</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Open Gemini and type or paste. Best for quick drafts, instant summaries, or ad-hoc questions. No setup required.</p>
+        <div style="margin-top:14px;background:#f6f7f9;border-radius:8px;padding:10px;font-size:11px;color:#555">
+          <b>Use when:</b> A one-time, unpredictable task arrives
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:var(--orange)"></div>
+        <div style="font-size:32px;margin-bottom:10px">⚙️</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:6px">Layer 2 — Skills</div>
+        <div style="font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.8px">Standing instructions</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Saved instructions that Gemini applies automatically when you do a matching task. Created once, used forever. Works across Google Workspace.</p>
+        <div style="margin-top:14px;background:#f6f7f9;border-radius:8px;padding:10px;font-size:11px;color:#555">
+          <b>Use when:</b> A task repeats weekly — MOM, email triage, reports
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:var(--red)"></div>
+        <div style="font-size:32px;margin-bottom:10px">💎</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:6px">Layer 3 — Gems</div>
+        <div style="font-size:11px;color:var(--red);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.8px">Specialist agents</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">Focused AI assistants you build and name. Each Gem is pre-loaded with a role, rules, and a workflow. One click to activate the right expert.</p>
+        <div style="margin-top:14px;background:#fff3f3;border-radius:8px;padding:10px;font-size:11px;color:#555">
+          <b>Use when:</b> A complex EA job needs consistent, high-quality output
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to create a Gem -->
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px">
+    <h3 style="margin:0 0 18px;font-size:16px">💎 How to Create a Gem in 5 Steps</h3>
+    <div style="display:flex;gap:0;position:relative">
+      <div style="position:absolute;top:22px;left:22px;right:22px;height:2px;background:var(--line);z-index:0"></div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%;position:relative;z-index:1">
+        <div style="text-align:center">
+          <div style="width:44px;height:44px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin:0 auto 10px">1</div>
+          <div style="font-size:11px;font-weight:700;margin-bottom:4px">Open Gemini</div>
+          <div style="font-size:10px;color:var(--muted)">Go to gemini.google.com or the Gemini app</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:44px;height:44px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin:0 auto 10px">2</div>
+          <div style="font-size:11px;font-weight:700;margin-bottom:4px">Click "Gems"</div>
+          <div style="font-size:10px;color:var(--muted)">Find it in the left sidebar under Explore</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:44px;height:44px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin:0 auto 10px">3</div>
+          <div style="font-size:11px;font-weight:700;margin-bottom:4px">New Gem</div>
+          <div style="font-size:10px;color:var(--muted)">Click "Create a Gem" and give it a name</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:44px;height:44px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin:0 auto 10px">4</div>
+          <div style="font-size:11px;font-weight:700;margin-bottom:4px">Paste instruction</div>
+          <div style="font-size:10px;color:var(--muted)">Copy from Gem Builder → paste into the instructions box</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:44px;height:44px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin:0 auto 10px">✓</div>
+          <div style="font-size:11px;font-weight:700;margin-bottom:4px">Save & Test</div>
+          <div style="font-size:10px;color:var(--muted)">Run the test scenario from Gem Builder to verify it works</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill cards overview -->
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px">
+    <h3 style="margin:0 0 6px;font-size:16px">⚙️ What are Gemini Skills?</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 16px">Skills are standing instructions stored in Gemini that automatically apply when you're doing a matching task in Gmail, Docs, or Workspace. Think of them as your personal EA rules that Gemini has memorized.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:#f6f7f9;border-radius:10px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px">📌 Example: Email Skill</div>
+        <div style="font-size:12px;color:#555;line-height:1.6">Instruction saved: <i>"Always classify emails as URGENT/ACTION/WAITING/INFO and extract action items with owners."</i><br><br>Result: Every time you open an email in Gmail and ask Gemini for help, it applies this rule automatically.</div>
+      </div>
+      <div style="background:#f6f7f9;border-radius:10px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px">📌 Example: MOM Skill</div>
+        <div style="font-size:12px;color:#555;line-height:1.6">Instruction saved: <i>"Always structure meeting outputs with: Objective, Key Points, Decisions, Actions, Owner, Deadline, Open Questions."</i><br><br>Result: Paste notes into Docs, ask Gemini to structure it — it follows your MOM format every time.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick comparison -->
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px;overflow-x:auto">
+    <h3 style="margin:0 0 16px;font-size:16px">📊 Chat vs Skill vs Gem — Quick Comparison</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:#f6f7f9">
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)">Feature</th>
+          <th style="text-align:center;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--blue)">💬 Chat</th>
+          <th style="text-align:center;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--orange)">⚙️ Skill</th>
+          <th style="text-align:center;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--red)">💎 Gem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid #f0f1f3">Setup needed</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">None</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">One-time</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">One-time</td></tr>
+        <tr style="background:#fafafa"><td style="padding:9px 12px;border-bottom:1px solid #f0f1f3">Reusable</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">❌</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">✅ Auto</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">✅ Click</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid #f0f1f3">Consistent output</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">Varies</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">High</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">Very High</td></tr>
+        <tr style="background:#fafafa"><td style="padding:9px 12px;border-bottom:1px solid #f0f1f3">Best for</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">Ad-hoc tasks</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">Recurring workflows</td><td style="text-align:center;padding:9px 12px;border-bottom:1px solid #f0f1f3">Complex specialist jobs</td></tr>
+        <tr><td style="padding:9px 12px">Works in Workspace</td><td style="text-align:center;padding:9px 12px">Chat only</td><td style="text-align:center;padding:9px 12px">Gmail, Docs, Sheets</td><td style="text-align:center;padding:9px 12px">Gemini chat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EA Skill pack -->
+  <div style="background:linear-gradient(135deg,#fff7f7,#fff);border:1px solid #f0dada;border-radius:14px;padding:22px">
+    <h3 style="margin:0 0 6px;font-size:16px">🚀 Your SuperEA Skill Pack — 15 Skills to Build</h3>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 16px">Build each Gem from the Gem Builder section. Once all 15 are set up, you have a complete AI-powered EA system.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">📨 Email Triage</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">📋 Meeting Prep</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">📝 MOM & Actions</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">✅ Task Tracker</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">🔔 Follow-up Manager</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">🔐 Approval & Escalation</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">⏰ Deadline Tracker</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">🎯 Task Prioritizer</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">📄 Document Reviewer</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">✈️ Travel & Itinerary</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">💰 Expense Manager</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">📊 Management Reports</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">💬 Executive Comms</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">🌅 Daily Brief</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12px">🌙 EOD Review</div>
+    </div>
+  </div>
+</div>
+</section>
 <section id="daily" class="section"><div class="resource"><h2>Daily EA Workflow</h2><div class="flow"><div class="step">Morning inputs</div><div class="arrow">→</div><div class="step">Priorities</div><div class="arrow">→</div><div class="step">Meetings</div><div class="arrow">→</div><div class="step">Actions</div><div class="arrow">→</div><div class="step">Follow-ups</div><div class="arrow">→</div><div class="step">EOD brief</div></div><p>Use the individual skills throughout the day instead of trying to make one giant prompt.</p></div></section>
 <section id="gemguide" class="section">
   <div class="resource">
@@ -146,8 +402,7 @@ h1{font-size:32px;margin:6px 0}.lead{color:var(--muted);max-width:800px;line-hei
     </div>
   </div>
 </section>
-<section id="best" class="section"><div class="resource"><h2>Best Practices</h2><ul><li>Give Gemini context, objective, audience and required format.</li><li>Ask for assumptions to be clearly marked.</li><li>For sensitive work, verify every factual detail.</li><li>Never forward AI output without checking names, dates, amounts and commitments.</li><li>Keep prompts reusable and improve them when you discover a recurring issue.</li></ul></div></section>
-<section id="plan" class="section"><div class="resource"><h2>30-Day Implementation</h2><ol><li><b>Week 1:</b> Email, communication, meeting preparation.</li><li><b>Week 2:</b> MOM, action items, follow-ups, approvals.</li><li><b>Week 3:</b> Documents, research, travel, expenses.</li><li><b>Week 4:</b> Executive brief, reports, advanced workflows and personal prompt library.</li></ol></div></section>
+
 </main>
 </div>
 
@@ -353,14 +608,18 @@ function showHome(){
   document.getElementById('home').classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
+// Standalone section IDs that have their own <section> element (not rendered via data object)
+const standaloneSections = ['gemguide','fundamentals','gemini','daily','scenarios'];
+
 function showDetail(id){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
-  if(id==='gemguide'){
-    document.getElementById('gemguide').classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-    return;
+  // If it has its own dedicated <section> element, just show that
+  if(standaloneSections.includes(id)){
+    const el=document.getElementById(id);
+    if(el){ el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); return; }
   }
-  if(data[id]){
+  // Otherwise render from the data object
+  if(data[id] && data[id].title){
     const d=data[id];
     document.getElementById('detailContent').innerHTML=`
       <div class="detail-head"><div><div class="eyebrow">Practical EA Skill</div><h2>${d.title}</h2><p>${d.desc}</p></div><div class="pill">USE → REVIEW → ACT</div></div>
@@ -373,8 +632,15 @@ function showDetail(id){
       <div class="panel" style="margin-top:18px"><h3>Example</h3><div class="example">${d.example}</div></div>
     `;
   }else{
+    // Fallback: try to find a standalone <section> with this id even if not in standaloneSections list
+    const el=document.getElementById(id);
+    if(el && el.id !== 'detail' && el.id !== 'home'){
+      el.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
     const s=skills.find(x=>x.id===id);
-    document.getElementById('detailContent').innerHTML=`<div class="resource"><h2>${s?s.name:'Skill'}</h2><p>This module is a supporting training area. Use the core skill cards on the home page for copy-ready EA prompts.</p></div>`;
+    document.getElementById('detailContent').innerHTML=`<div class="resource"><h2>${s?s.name:'Module'}</h2><p>Content for this module is coming soon. Use the core skill cards on the home page for copy-ready EA prompts.</p></div>`;
   }
   document.getElementById('detail').classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
