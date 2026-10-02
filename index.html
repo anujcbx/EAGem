@@ -1,1 +1,767 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperEA | Gemini AI Command Center</title>
+<style>
+:root{
+  --red:#c62828;--red2:#ef5350;--ink:#202124;--muted:#6b7280;
+  --bg:#f5f6f8;--card:#fff;--line:#e6e8ec;--soft:#fff3f3;
+  --green:#188038;--blue:#1967d2;--orange:#b06000;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.app{display:flex;min-height:100vh}
+.sidebar{width:270px;background:#a91f23;color:#fff;padding:24px 16px;position:fixed;inset:0 auto 0 0;overflow:auto}
+.brand{font-size:25px;font-weight:800;padding:8px 12px 22px;border-bottom:1px solid rgba(255,255,255,.2)}
+.brand small{display:block;font-size:11px;font-weight:500;opacity:.8;margin-top:5px;letter-spacing:1px}
+.nav-title{font-size:10px;text-transform:uppercase;letter-spacing:1.4px;opacity:.65;margin:22px 12px 8px}
+.nav button{width:100%;border:0;background:transparent;color:#fff;text-align:left;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:13px;margin:2px 0}
+.nav button:hover,.nav button.active{background:rgba(255,255,255,.16)}
+.main{margin-left:270px;width:calc(100% - 270px);padding:34px 42px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px}
+.eyebrow{color:var(--red);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px}
+h1{font-size:32px;margin:6px 0}.lead{color:var(--muted);max-width:800px;line-height:1.6}
+.badge{background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:20px;font-size:12px}
+.hero{background:linear-gradient(135deg,#fff,#fff5f5);border:1px solid #f0dada;border-radius:18px;padding:24px;margin-bottom:24px}
+.hero h2{margin:0 0 8px;font-size:22px}.hero p{margin:0;color:#555;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:.18s;min-height:165px}
+.skill:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(0,0,0,.07);border-color:#e7b2b2}
+.icon{font-size:24px}.skill h3{font-size:16px;margin:10px 0 6px}.skill p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 10px}
+.tag{display:inline-block;background:#f7f7f8;border-radius:12px;padding:4px 8px;font-size:10px;color:#555}
+.section{display:none}.section.active{display:block}
+.back{border:0;background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:8px;cursor:pointer;margin-bottom:18px}
+.detail-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.detail-head h2{font-size:28px;margin:0 0 8px}.detail-head p{color:var(--muted);line-height:1.55}
+.pill{background:var(--soft);color:var(--red);padding:7px 10px;border-radius:15px;font-size:11px;font-weight:700}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.panel h3{margin:0 0 12px;font-size:16px}.panel h4{font-size:13px;margin:18px 0 7px}
+.panel ul{padding-left:18px;line-height:1.7;font-size:13px;color:#444}
+.prompt{background:#202124;color:#f5f5f5;border-radius:10px;padding:14px;margin:10px 0;position:relative;font-size:12px;line-height:1.55;white-space:pre-wrap}
+.copy{position:absolute;right:8px;top:8px;border:1px solid #555;background:#303134;color:#fff;border-radius:6px;padding:5px 8px;font-size:10px;cursor:pointer}
+.example{background:#f8fafc;border:1px dashed #ccd3dc;border-radius:10px;padding:13px;font-size:12px;line-height:1.55;white-space:pre-wrap}
+.flow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.step{background:#f6f7f9;padding:9px 11px;border-radius:8px;font-size:11px}.arrow{padding:8px 0;color:#999}
+.practice{border-left:4px solid var(--red);background:#fff7f7;padding:13px;margin-top:15px;font-size:12px;line-height:1.55}
+.copyall{background:var(--red);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.kpi{background:#fff;border:1px solid var(--line);padding:16px;border-radius:12px}.kpi b{font-size:24px}.kpi span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.search{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:15px;font-size:13px}
+.resource{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:15px}
+.resource h3{margin-top:0}.resource li{line-height:1.7;font-size:13px}
+.gem-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.gem-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.gem-card h3{margin:8px 0 5px;font-size:18px}.gem-meta{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.gem-scenario{background:#fff7f7;border-left:4px solid var(--red);padding:10px 12px;border-radius:6px;font-size:12px;line-height:1.5;margin:10px 0}
+.gem-prompt{background:#202124;color:#f5f5f5;border-radius:10px;padding:14px;font-size:11.5px;line-height:1.55;white-space:pre-wrap;max-height:360px;overflow:auto}
+.gem-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.gem-actions button{border:0;background:var(--red);color:#fff;padding:9px 12px;border-radius:7px;cursor:pointer;font-size:11px;font-weight:700}
+.gem-actions button.secondary{background:#f0f1f3;color:#333}
+.scenario-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:15px}
+.scenario{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fff;font-size:12px;line-height:1.55}
+@media(max-width:900px){.gem-grid,.scenario-list{grid-template-columns:1fr}}
+
+@media(max-width:900px){.sidebar{width:220px}.main{margin-left:220px;width:calc(100% - 220px);padding:24px}.grid{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.sidebar{position:relative;width:100%;height:auto}.main{margin:0;width:100%}.app{display:block}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">SuperEA <small>MASTER GEMINI AI SKILLS</small></div>
+  <div class="nav">
+    <div class="nav-title">Training Modules</div>
+    <button onclick="showHome()">🏠 Start Here</button>
+    <button onclick="showDetail('fundamentals')">🤖 EA + AI Fundamentals</button>
+    <button onclick="showDetail('gemini')">✨ Gemini & Skills</button>
+    <button onclick="showDetail('daily')">🌅 Daily EA Workflow</button>
+    <button onclick="showDetail('email')">📨 Email & Communication</button>
+    <button onclick="showDetail('meetings')">📅 Meetings & MOM</button>
+    <button onclick="showDetail('tasks')">✅ Tasks & Follow-ups</button>
+    <button onclick="showDetail('approvals')">🔐 Approvals & Escalation</button>
+    <button onclick="showDetail('documents')">📄 Documents & Research</button>
+    <button onclick="showDetail('travel')">✈️ Travel & Expenses</button>
+    <button onclick="showDetail('reports')">📊 Reports & Executive Brief</button>
+    <div class="nav-title">Gem Builder</div>
+    <button onclick="showDetail('gemguide')">🧩 Prompt Guide — Create Different Gems</button>
+    <button onclick="showDetail('scenarios')">🎯 Real-World EA Scenarios</button>
+    <div class="nav-title">Resources</div>
+    <button onclick="showDetail('best')">⭐ Best Practices</button>
+    <button onclick="showDetail('plan')">📆 30-Day Implementation</button>
+  </div>
+</aside>
+
+<main class="main">
+<section id="home" class="section active">
+  <div class="top">
+    <div><div class="eyebrow">Executive Assistant AI Training</div><h1>SuperEA Gemini Command Center</h1>
+    <p class="lead">This is a practical training workspace. Do not just read about AI — pick a real EA task, use the matching Gem, copy a ready prompt, give Gemini the required information, review the result, and then take the human action.</p></div>
+    <div class="badge">15 Core Skills • 50+ Prompts • Practice Workflows</div>
+  </div>
+  <div class="hero"><h2>How an EA should use this</h2><p><b>1. Pick the work.</b> &nbsp; <b>2. Open the skill.</b> &nbsp; <b>3. Copy a ready prompt.</b> &nbsp; <b>4. Add your real information.</b> &nbsp; <b>5. Review Gemini's output.</b> &nbsp; <b>6. Send / update / report only after human checking.</b></p></div>
+  <div class="kpis">
+    <div class="kpi"><b>15</b><span>Core EA skills</span></div>
+    <div class="kpi"><b>50+</b><span>Ready-to-use prompts</span></div>
+    <div class="kpi"><b>12</b><span>Real-world scenarios</span></div>
+    <div class="kpi"><b>30</b><span>Days to implement</span></div>
+  </div>
+  <input class="search" id="search" oninput="filterSkills()" placeholder="Search a skill, e.g. email, MOM, travel, approval...">
+  <div class="grid" id="skillGrid"></div>
+</section>
+
+<section id="detail" class="section">
+  <button class="back" onclick="showHome()">← Back to all skills</button>
+  <div id="detailContent"></div>
+</section>
+
+<section id="fundamentals" class="section"><div class="resource"><h2>EA + AI Fundamentals</h2><p>Learn the difference between asking Gemini a question and building a repeatable workflow. The goal is to reduce repetitive work while keeping the EA responsible for accuracy, confidentiality and final decisions.</p><h3>EA rule</h3><ul><li>AI drafts and structures; the EA reviews and decides what is sent.</li><li>Never invent names, dates, amounts, approvals or commitments.</li><li>Use company-approved information and avoid sharing confidential information unless permitted.</li></ul></div></section>
+<section id="gemini" class="section"><div class="resource"><h2>Gemini & Skills</h2><p>Gemini Skills are reusable instructions that teach Gemini how to perform a recurring workflow. Google says Skills can be used automatically when relevant or explicitly selected, and multiple Skills can be combined.</p><h3>EA practice</h3><ol><li>Create or receive the approved EA Skills.</li><li>Use the skill when doing the matching task.</li><li>Give Gemini the real context: email, notes, agenda, data or document.</li><li>Review the output before using it.</li></ol></div></section>
+<section id="daily" class="section"><div class="resource"><h2>Daily EA Workflow</h2><div class="flow"><div class="step">Morning inputs</div><div class="arrow">→</div><div class="step">Priorities</div><div class="arrow">→</div><div class="step">Meetings</div><div class="arrow">→</div><div class="step">Actions</div><div class="arrow">→</div><div class="step">Follow-ups</div><div class="arrow">→</div><div class="step">EOD brief</div></div><p>Use the individual skills throughout the day instead of trying to make one giant prompt.</p></div></section>
+<section id="gemguide" class="section">
+  <div class="resource">
+    <div class="eyebrow">Gem Builder</div>
+    <h2>Prompt Guide — Create Different Gemini Gems</h2>
+    <p>Instead of making one giant Gem for every EA activity, create focused Gems for recurring jobs. Each Gem below contains a ready-to-paste instruction prompt plus practical scenarios. Copy the instruction into Gemini when creating the Gem, then test it with the sample scenario.</p>
+  </div>
+  <div id="gemCards" class="gem-grid"></div>
+</section>
+<section id="scenarios" class="section">
+  <div class="resource">
+    <h2>Real-World EA Scenarios</h2>
+    <p>Use these scenarios during training. The EA should identify the right Gem, provide the source information, run the workflow, review the result and then take the human action.</p>
+    <div class="scenario-list">
+      <div class="scenario"><b>01 — 30 unread emails</b><br>Use <b>Email Manager Gem</b> to classify priority, extract actions and draft replies.</div>
+      <div class="scenario"><b>02 — Meeting finished</b><br>Use <b>MOM & Action Gem</b> to convert notes into decisions, actions, owners and deadlines.</div>
+      <div class="scenario"><b>03 — Vendor is not responding</b><br>Use <b>Follow-up Gem</b> to prepare a polite reminder and escalation sequence.</div>
+      <div class="scenario"><b>04 — Approval pending</b><br>Use <b>Approval Gem</b> to prepare the management summary and escalation.</div>
+      <div class="scenario"><b>05 — CEO morning briefing</b><br>Use <b>Executive Brief Gem</b> to combine calendar, deadlines, approvals and priority emails.</div>
+      <div class="scenario"><b>06 — Long proposal</b><br>Use <b>Document Review Gem</b> to create a decision-ready summary and clarification questions.</div>
+      <div class="scenario"><b>07 — Business travel changed</b><br>Use <b>Travel Gem</b> to rebuild the itinerary and communication checklist.</div>
+      <div class="scenario"><b>08 — Weekly management update</b><br>Use <b>Management Report Gem</b> to turn raw updates into an executive report.</div>
+      <div class="scenario"><b>09 — End of day</b><br>Use <b>EOD Gem</b> to prepare completed, pending, blocked and tomorrow priorities.</div>
+      <div class="scenario"><b>10 — Too many tasks</b><br>Use <b>Task Prioritizer Gem</b> to identify what needs executive attention.</div>
+    </div>
+  </div>
+</section>
+<section id="best" class="section"><div class="resource"><h2>Best Practices</h2><ul><li>Give Gemini context, objective, audience and required format.</li><li>Ask for assumptions to be clearly marked.</li><li>For sensitive work, verify every factual detail.</li><li>Never forward AI output without checking names, dates, amounts and commitments.</li><li>Keep prompts reusable and improve them when you discover a recurring issue.</li></ul></div></section>
+<section id="plan" class="section"><div class="resource"><h2>30-Day Implementation</h2><ol><li><b>Week 1:</b> Email, communication, meeting preparation.</li><li><b>Week 2:</b> MOM, action items, follow-ups, approvals.</li><li><b>Week 3:</b> Documents, research, travel, expenses.</li><li><b>Week 4:</b> Executive brief, reports, advanced workflows and personal prompt library.</li></ol></div></section>
+</main>
+</div>
+
+<script>
+const skills = [
+{id:'email',icon:'📨',name:'Email Triage & Communication',desc:'Turn inbox work into summaries, priorities, drafts, replies and follow-ups.',tag:'Email'},
+{id:'meetingprep',icon:'📋',name:'Meeting Preparation',desc:'Prepare agendas, briefing notes, questions, participant context and pre-reads.',tag:'Meetings'},
+{id:'meetings',icon:'📝',name:'Meeting Notes & MOM',desc:'Convert notes or transcripts into professional MOM with decisions and actions.',tag:'MOM'},
+{id:'tasks',icon:'✅',name:'Action Item Tracker',desc:'Extract tasks, owners, deadlines, dependencies and status from any discussion.',tag:'Tasks'},
+{id:'followup',icon:'🔔',name:'Follow-up Manager',desc:'Find pending commitments and create professional reminder messages.',tag:'Follow-up'},
+{id:'approvals',icon:'🔐',name:'Approval & Escalation',desc:'Create approval summaries and escalation communications based on thresholds.',tag:'Approvals'},
+{id:'deadlines',icon:'⏰',name:'Deadline & Commitment Tracker',desc:'Turn emails and meeting notes into a clean commitment calendar.',tag:'Deadlines'},
+{id:'prioritize',icon:'🎯',name:'Executive Task Prioritizer',desc:'Organize work by urgency, impact, dependency and management attention.',tag:'Priority'},
+{id:'documents',icon:'📄',name:'Document Reviewer',desc:'Summarize proposals, contracts, policies and long documents into decision-ready notes.',tag:'Documents'},
+{id:'travel',icon:'✈️',name:'Travel & Itinerary Manager',desc:'Build itineraries, checklists, travel briefs and change communications.',tag:'Travel'},
+{id:'expense',icon:'💰',name:'Expense & Reimbursement',desc:'Structure expense information, identify missing details and prepare summaries.',tag:'Expenses'},
+{id:'reports',icon:'📊',name:'Management Report Builder',desc:'Turn raw information into management summaries, KPIs and action points.',tag:'Reports'},
+{id:'execcomms',icon:'💬',name:'Executive Communication Writer',desc:'Draft CEO-level emails, WhatsApp messages, announcements and escalations.',tag:'Communication'},
+{id:'brief',icon:'🌅',name:'Daily Executive Brief',desc:'Create a concise morning view of meetings, priorities, risks and pending actions.',tag:'Daily Brief'},
+{id:'eod',icon:'🌙',name:'End-of-Day Executive Review',desc:'Summarize completed work, pending items, blockers, follow-ups and tomorrow priorities.',tag:'EOD'}
+];
+
+const data = {
+email:{
+title:'Email Triage & Communication',desc:'Use Gemini to understand, prioritize and draft email work without manually reading every thread from scratch.',
+inputs:['Email thread or pasted email','Who the recipient is','Desired outcome','Any company tone or policy'],
+prompts:[
+['Summarize an email thread','Analyze the email thread below. Give me: 1) one-line summary, 2) issue/request, 3) action required, 4) owner, 5) deadline mentioned, 6) decision required, 7) risks or missing information. Do not invent anything.\\n\\nEMAIL:\\n[PASTE EMAIL]'],
+['Draft a reply','Draft a professional reply to this email. The purpose is: [PURPOSE]. Recipient: [ROLE/NAME]. Tone: concise, professional and human. Confirm only facts present in the source. If information is missing, use a placeholder instead of guessing.\\n\\nEMAIL:\\n[PASTE EMAIL]'],
+['Create priority list','Review these emails and classify each as: URGENT TODAY / ACTION THIS WEEK / WAITING / INFORMATION ONLY. Give a one-line reason and suggested next action. Do not judge urgency from emotion alone.\\n\\nEMAILS:\\n[PASTE EMAILS]'],
+['Write a follow-up','Write a polite follow-up for this pending email. Mention the original request, date of previous communication if provided, what is needed now, and a clear but professional next step.\\n\\nTHREAD:\\n[PASTE THREAD]']
+],
+example:'INPUT: “Please confirm whether the payment of ₹4.8 lakh has been released and share the expected release date.”\\n\\nOUTPUT: Payment status confirmation is required. Owner: Accounts. Required information: released/not released + expected release date. Suggested reply: “Dear Team, kindly confirm the current payment status and expected release date for our records.”',
+practice:'Take 5 real non-sensitive emails. Use the four prompts above. Compare Gemini’s summary with your own understanding before sending any reply.'
+},
+meetingprep:{
+title:'Meeting Preparation',desc:'Turn a meeting invite and context into a practical briefing pack for the executive.',
+inputs:['Meeting title and purpose','Participants','Previous MOM or emails','Known objectives/questions'],
+prompts:[
+['Prepare a meeting brief','Prepare a one-page executive meeting brief using the information below. Include: objective, participants/roles, background, open issues, decisions required, questions to ask, documents to review, and desired outcome. Mark unknown items as “Not provided”.\\n\\nMEETING INFO:\\n[PASTE]'],
+['Create agenda','Create a 30-minute agenda for this meeting. Prioritize decision items first. Include time allocation, owner/speaker where known, and expected outcome for each item.\\n\\nCONTEXT:\\n[PASTE]'],
+['Prepare questions','Based on this meeting context, create 10 practical questions an EA should prepare for the executive. Separate them into clarification, decision, risk and follow-up questions.\\n\\nCONTEXT:\\n[PASTE]']
+],
+example:'OUTPUT SECTIONS: Objective → Participants → Background → Open Issues → Decisions Required → Questions → Documents → Expected Outcome',
+practice:'Take tomorrow’s most important meeting and prepare the brief before the meeting. After the meeting, compare the brief with what actually happened.'
+},
+meetings:{
+title:'Meeting Notes & MOM',desc:'Convert rough notes, transcripts or voice-note text into a professional Minutes of Meeting.',
+inputs:['Meeting notes/transcript','Meeting date','Participants','Known decisions'],
+prompts:[
+['Create MOM','Convert the notes below into professional Minutes of Meeting. Use sections: Meeting Objective, Key Discussion Points, Decisions, Action Items, Owner, Deadline, Dependencies, Open Questions. Do not invent owners or deadlines.\\n\\nNOTES:\\n[PASTE NOTES]'],
+['Extract actions only','From the meeting notes below, extract only actionable items. Return columns: Action | Owner | Deadline | Priority | Dependency | Source sentence. If a field is missing, write “Not specified”.\\n\\nNOTES:\\n[PASTE]'],
+['Executive MOM','Create a short executive MOM with only: 3-line summary, decisions made, critical actions, risks and next follow-up date.\\n\\nNOTES:\\n[PASTE]']
+],
+example:'ACTION ITEM: Confirm vendor quotation | Owner: Rahul | Deadline: 5 Oct | Dependency: Final specification | Priority: High',
+practice:'Use notes from one completed meeting. Verify every action against the original notes before adding it to the official tracker.'
+},
+tasks:{
+title:'Action Item Tracker',desc:'Turn unstructured information into a clean task list that an EA can track.',
+inputs:['Meeting MOM','Emails','WhatsApp messages','Management instructions'],
+prompts:[
+['Build task tracker','Convert the information below into a task tracker with columns: Task | Owner | Priority | Due Date | Status | Dependency | Next Follow-up. Never invent missing values.\\n\\nSOURCE:\\n[PASTE]'],
+['Find overdue work','Review this task list. Identify overdue, due soon and blocked items. For each, explain the factual reason based only on the data and draft the next follow-up.\\n\\nTASK LIST:\\n[PASTE]'],
+['CEO task summary','Create a CEO-facing task summary from this list. Show: critical pending items, decisions needed from CEO, items waiting on others, and upcoming deadlines.\\n\\nTASKS:\\n[PASTE]']
+],
+example:'TASK | OWNER | DUE | STATUS\\nVendor comparison | Amit | 4 Oct | Pending\\nContract draft | Legal | 2 Oct | Waiting for revision',
+practice:'Take one live task sheet and ask Gemini to convert it into a management-ready pending list. Verify dates and owners.'
+},
+followup:{
+title:'Follow-up Manager',desc:'Use Gemini to prepare professional follow-ups without sounding repetitive or aggressive.',
+inputs:['Original request','Last communication','Person/department','Required outcome'],
+prompts:[
+['Follow-up email','Write a concise follow-up email for the request below. Tone: polite, professional, firm but not aggressive. Mention what was requested, previous follow-up if available, and what confirmation is needed.\\n\\nREQUEST:\\n[PASTE]'],
+['Follow-up WhatsApp','Create a short WhatsApp follow-up to [NAME/ROLE] regarding [TASK]. Keep it human, polite and action-oriented. Do not use corporate jargon.\\n\\nCONTEXT:\\n[PASTE]'],
+['Follow-up list','Review these pending items and create a follow-up plan: Item | Person | Last Contact | What is Needed | Suggested Follow-up Date | Message.\\n\\nDATA:\\n[PASTE]']
+],
+example:'“Hi Rahul, just following up on the quotation shared earlier. Could you please confirm the revised quote and expected timeline today?”',
+practice:'Choose 5 pending items from your current follow-up list and generate drafts. Personalize each before sending.'
+},
+approvals:{
+title:'Approval & Escalation',desc:'Prepare approval summaries and escalation messages while respecting company thresholds and approval rules.',
+inputs:['Request details','Amount','Requester','Current approver/status','Approval policy'],
+prompts:[
+['Approval summary','Create an approval summary for management. Include requester, purpose, amount, business reason, current status, approval required, deadline and supporting documents. Do not make an approval decision.\\n\\nREQUEST:\\n[PASTE]'],
+['Escalation draft','Draft a professional escalation to [SENIOR ROLE] because the request is pending with [CURRENT OWNER]. Include factual history, amount, required decision and deadline. Avoid blame.\\n\\nDETAILS:\\n[PASTE]'],
+['Approval tracker','Convert these requests into a tracker: Request | Requester | Amount | Current Stage | Approver | Date Raised | Pending Since | Next Action.\\n\\nDATA:\\n[PASTE]']
+],
+example:'Approval Summary → Requester → Amount → Purpose → Current Stage → Decision Needed → Supporting Information → Deadline',
+practice:'Use a sample approval request and check whether Gemini correctly preserves the amount, approver and approval stage.'
+},
+deadlines:{
+title:'Deadline & Commitment Tracker',desc:'Capture every important commitment from emails, meetings and instructions.',
+inputs:['Emails','MOM','Management instructions','Existing tracker'],
+prompts:[
+['Extract commitments','Extract all commitments and deadlines from the text. Return: Commitment | Owner | Date | Recipient/Stakeholder | Status | Source. If no date is given, write “No date specified”.\\n\\nTEXT:\\n[PASTE]'],
+['Upcoming deadlines','Review this tracker and group items into: Due Today, Due in 3 Days, Due This Week, Overdue, No Deadline. Suggest one next action for each group.\\n\\nTRACKER:\\n[PASTE]'],
+['Daily deadline brief','Create a short morning deadline brief from this list. Highlight only deadlines requiring attention today or within 48 hours.\\n\\nLIST:\\n[PASTE]']
+],
+example:'DUE TODAY: Vendor confirmation — Owner: Amit — Needed by 4 PM — Status: Pending',
+practice:'Use your current deadline list and verify every date against the original source.'
+},
+prioritize:{
+title:'Executive Task Prioritizer',desc:'Help the EA organize work using objective criteria rather than simply treating every request as urgent.',
+inputs:['Task list','Deadlines','Business impact','Dependencies','Executive priorities'],
+prompts:[
+['Prioritize tasks','Prioritize the following tasks using four factors: deadline, business impact, dependency, and executive involvement. Classify as P1/P2/P3 and explain the factual reason for each. Do not invent business impact if it is not provided.\\n\\nTASKS:\\n[PASTE]'],
+['CEO attention list','From this task list, identify items that require executive attention because a decision, approval or escalation is needed. Separate them from tasks the EA/team can handle directly.\\n\\nTASKS:\\n[PASTE]'],
+['Today plan','Create an EA plan for today from these tasks. Include Morning, Before Meetings, Between Meetings, Follow-ups and EOD. Keep realistic and flag conflicts.\\n\\nTASKS:\\n[PASTE]']
+],
+example:'P1: Approval required today — management decision needed.\\nP2: Vendor follow-up due this week.\\nP3: Information-only task.',
+practice:'Give Gemini 15 mixed tasks and compare its priority logic with your manager’s actual priorities.'
+},
+documents:{
+title:'Document Reviewer',desc:'Turn long documents into decision-ready summaries and questions.',
+inputs:['PDF/document text','Purpose of review','Audience','Specific concerns'],
+prompts:[
+['Executive summary','Review this document and create an executive summary: purpose, key points, financial/commercial terms if present, obligations, deadlines, risks mentioned by the document, decisions required and questions. Do not provide legal advice or invent missing information.\\n\\nDOCUMENT:\\n[PASTE/UPLOAD]'],
+['Compare two documents','Compare Document A and B. Create a table showing differences in scope, price, timeline, responsibilities, obligations, termination, risks and missing information. Quote only short excerpts when necessary.\\n\\nA:\\n[PASTE]\\n\\nB:\\n[PASTE]'],
+['Question list','Create a list of clarification questions an EA should ask the relevant owner before management signs/approves this document.\\n\\nDOCUMENT:\\n[PASTE]']
+],
+example:'DECISION REQUIRED: Confirm whether the proposed payment schedule is acceptable.\\nMISSING: Effective date was not provided.',
+practice:'Review a non-confidential proposal and verify Gemini’s summary line-by-line against the source.'
+},
+travel:{
+title:'Travel & Itinerary Manager',desc:'Create a practical travel brief, itinerary and communication checklist.',
+inputs:['Traveller','Destination','Dates','Meetings/events','Known bookings'],
+prompts:[
+['Travel brief','Create an executive travel brief with dates, destination, purpose, meetings, travel segments, hotel, local transport, documents/checklist and open items. Clearly mark missing information.\\n\\nTRIP DETAILS:\\n[PASTE]'],
+['Itinerary','Convert these travel details into a clean chronological itinerary with Date | Time | Activity | Location | Booking/Reference | Notes. Do not invent times.\\n\\nDETAILS:\\n[PASTE]'],
+['Change communication','A travel plan has changed. Draft separate messages for the traveller, hotel/transport provider and internal stakeholders. Clearly state only the confirmed changes.\\n\\nOLD PLAN:\\n[PASTE]\\n\\nNEW PLAN:\\n[PASTE]']
+],
+example:'08:30 — Airport departure\\n11:15 — Arrival\\n14:00 — Client meeting\\n18:30 — Hotel check-in',
+practice:'Create a sample 2-day business itinerary and then ask Gemini to produce the executive’s one-page travel brief.'
+},
+expense:{
+title:'Expense & Reimbursement',desc:'Organize expense information and identify missing documentation before submission.',
+inputs:['Expense list/receipts','Travel dates','Policy','Cost center/project'],
+prompts:[
+['Expense summary','Create an expense summary from the information below: Date | Category | Amount | Purpose | Paid By | Receipt Available | Policy Note. Flag missing information without guessing.\\n\\nDATA:\\n[PASTE]'],
+['Policy check','Compare these expenses against the policy provided. Mark each as: Appears compliant / Needs clarification / Missing support. Do not make a final approval decision.\\n\\nPOLICY:\\n[PASTE]\\n\\nEXPENSES:\\n[PASTE]'],
+['Accounts submission email','Draft a concise email to Accounts submitting these expenses for review. Mention total amount, period, traveller/employee and any missing documents.\\n\\nDATA:\\n[PASTE]']
+],
+example:'TOTAL: ₹18,450\\nMISSING: 1 taxi receipt\\nNEEDS CLARIFICATION: Meal expense policy category',
+practice:'Use dummy expenses and check whether Gemini catches missing receipts and unclear categories.'
+},
+reports:{
+title:'Management Report Builder',desc:'Convert raw updates or data into a concise report for management.',
+inputs:['Raw data/update','Reporting period','Required KPIs','Audience','Known targets'],
+prompts:[
+['Management summary','Turn the information below into a management report with: Executive Summary, KPI Snapshot, Major Updates, Issues/Risks, Pending Decisions, Action Plan and Next Review. Separate facts from observations.\\n\\nDATA:\\n[PASTE]'],
+['Weekly update','Create a one-page weekly management update. Keep it concise. Highlight completed, pending, overdue, blocked and decisions required.\\n\\nWEEKLY DATA:\\n[PASTE]'],
+['Data questions','Review this data and list the 10 questions a management reviewer is likely to ask. For each question, state what additional data would answer it.\\n\\nDATA:\\n[PASTE]']
+],
+example:'EXECUTIVE SUMMARY: 3 bullets\\nKPI SNAPSHOT: 5 metrics\\nATTENTION REQUIRED: 3 items\\nDECISIONS: 2 items',
+practice:'Give Gemini a weekly operational update and turn it into a one-page management brief. Verify all numbers.'
+},
+execcomms:{
+title:'Executive Communication Writer',desc:'Create polished, human communication for management, clients, vendors and internal teams.',
+inputs:['Audience','Purpose','Key facts','Tone','Call to action'],
+prompts:[
+['CEO email','Draft a concise email from an executive to [AUDIENCE]. Purpose: [PURPOSE]. Include only these facts: [FACTS]. Tone: confident, respectful and human. End with a clear next step.\\n\\nDETAILS:\\n[PASTE]'],
+['WhatsApp','Convert this formal message into a short professional WhatsApp message. Keep the meaning, remove unnecessary corporate language and make the requested action clear.\\n\\nMESSAGE:\\n[PASTE]'],
+['Escalation','Draft a factual escalation message. State what happened, previous actions, current status, impact if provided, and the specific decision/action required. Avoid blame or emotional language.\\n\\nDETAILS:\\n[PASTE]']
+],
+example:'Subject: Confirmation Required — Vendor Payment\\nDear Team,\\nPlease confirm the current payment status and expected release date by 4 PM today. This will help us close the pending item.\\nRegards',
+practice:'Take one difficult message you need to send this week. Generate three tones: polite, firm and executive. Choose and edit one.'
+},
+brief:{
+title:'Daily Executive Brief',desc:'Create a morning snapshot so the executive can see what needs attention without reading every source.',
+inputs:['Calendar','Priority emails','Pending actions','Approvals','Deadlines','Important updates'],
+prompts:[
+['Morning brief','Create a concise executive morning brief from the information below. Sections: Today’s Schedule, Top 5 Attention Items, Decisions Required, Pending Approvals, Critical Deadlines, Follow-ups, Risks/Unknowns. Do not invent facts.\\n\\nINPUTS:\\n[PASTE]'],
+['Meeting-focused brief','Create a meeting-focused brief for today. For each important meeting include purpose, participants, preparation needed, decisions expected and open questions.\\n\\nCALENDAR/NOTES:\\n[PASTE]'],
+['60-second brief','Create a 60-second verbal briefing for the executive. Maximum 10 bullets. Prioritize decisions, deadlines and exceptions.\\n\\nINPUTS:\\n[PASTE]']
+],
+example:'TODAY: 4 meetings\\nDECISIONS: 2 approvals pending\\nDEADLINES: 1 item due today\\nFOLLOW-UPS: 3 external responses pending',
+practice:'Create a morning brief using yesterday’s emails, today’s calendar and your task list. Ask the executive what should be added or removed.'
+},
+eod:{
+title:'End-of-Day Executive Review',desc:'Close the day with a clear view of completed work, pending items and tomorrow’s priorities.',
+inputs:['Completed tasks','Pending tasks','Follow-ups','Meeting outcomes','New issues','Tomorrow calendar'],
+prompts:[
+['EOD report','Create an end-of-day executive report with: Completed, Pending, Overdue, Waiting for Others, Decisions Needed, New Risks/Issues, Tomorrow’s Top Priorities. Keep it concise.\\n\\nDATA:\\n[PASTE]'],
+['Tomorrow preparation','Based on today’s pending work and tomorrow’s calendar, create a preparation checklist for the EA. Include documents, people to contact, decisions to prepare and deadlines to watch.\\n\\nDATA:\\n[PASTE]'],
+['Executive WhatsApp update','Create a short WhatsApp-style EOD update for the executive. Maximum 8 bullets. Focus on completed work, exceptions, decisions required and tomorrow’s critical items.\\n\\nDATA:\\n[PASTE]']
+],
+example:'COMPLETED: Vendor comparison received\\nPENDING: Contract revision\\nDECISION: Confirm meeting slot\\nTOMORROW: Prepare client meeting brief',
+practice:'Use today’s real work log and create an EOD report. Check it against your actual task tracker before sharing.'
+},
+meetingprep2:{}
+};
+
+function renderSkills(list=skills){
+  const grid=document.getElementById('skillGrid');
+  grid.innerHTML=list.map(s=>`<div class="skill" onclick="showDetail('${s.id}')"><div class="icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><span class="tag">${s.tag}</span></div>`).join('');
+}
+function filterSkills(){
+  const q=document.getElementById('search').value.toLowerCase();
+  renderSkills(skills.filter(s=>(s.name+s.desc+s.tag).toLowerCase().includes(q)));
+}
+function showHome(){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.getElementById('home').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showDetail(id){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  if(id==='gemguide'){
+    document.getElementById('gemguide').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  if(data[id]){
+    const d=data[id];
+    document.getElementById('detailContent').innerHTML=`
+      <div class="detail-head"><div><div class="eyebrow">Practical EA Skill</div><h2>${d.title}</h2><p>${d.desc}</p></div><div class="pill">USE → REVIEW → ACT</div></div>
+      <div class="cols">
+        <div class="panel"><h3>What to give Gemini</h3><ul>${d.inputs.map(x=>`<li>${x}</li>`).join('')}</ul>
+        <h4>Recommended workflow</h4><div class="flow"><div class="step">Collect input</div><div class="arrow">→</div><div class="step">Copy prompt</div><div class="arrow">→</div><div class="step">Run in Gemini</div><div class="arrow">→</div><div class="step">Review</div><div class="arrow">→</div><div class="step">Use output</div></div>
+        <div class="practice"><b>EA Practice:</b><br>${d.practice}</div></div>
+        <div class="panel"><h3>Ready-to-use prompts</h3>${d.prompts.map((p,i)=>`<h4>${i+1}. ${p[0]}</h4><div class="prompt" id="p_${id}_${i}">${escapeHtml(p[1])}<button class="copy" onclick="copyPrompt('${id}',${i})">Copy</button></div>`).join('')}</div>
+      </div>
+      <div class="panel" style="margin-top:18px"><h3>Example</h3><div class="example">${d.example}</div></div>
+    `;
+  }else{
+    const s=skills.find(x=>x.id===id);
+    document.getElementById('detailContent').innerHTML=`<div class="resource"><h2>${s?s.name:'Skill'}</h2><p>This module is a supporting training area. Use the core skill cards on the home page for copy-ready EA prompts.</p></div>`;
+  }
+  document.getElementById('detail').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function copyPrompt(id,i){
+  navigator.clipboard.writeText(data[id].prompts[i][1]).then(()=>{
+    const b=document.querySelector(`#p_${id}_${i} .copy`); const old=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=old,1200);
+  });
+}
+
+const gems = [
+{
+name:"Email Manager Gem",icon:"📨",purpose:"Inbox triage, email summaries, reply drafting, priority and follow-up.",
+scenario:"CEO receives multiple emails. The EA needs to identify what needs attention today and prepare replies.",
+prompt:`You are an Executive Assistant Email Manager.
+
+Your job is to help me process business emails quickly and accurately.
+
+WORKFLOW:
+1. Read the email/thread carefully.
+2. Summarize the issue in 1–2 lines.
+3. Identify the requested action.
+4. Identify owner, deadline, decision and dependencies when explicitly provided.
+5. Classify as URGENT TODAY / ACTION THIS WEEK / WAITING / INFORMATION ONLY.
+6. Draft a reply when I ask for one.
+7. Draft follow-up messages when I ask for a follow-up.
+
+RULES:
+- Never invent names, dates, amounts, approvals or commitments.
+- If information is missing, write "Not provided".
+- Separate facts from assumptions.
+- Keep executive communication concise, professional and human.
+- Before producing a reply, preserve the original intent.
+- Flag sensitive or unclear items for human review.
+
+DEFAULT OUTPUT:
+EMAIL SUMMARY
+PRIORITY
+ACTION REQUIRED
+OWNER
+DEADLINE
+DECISION REQUIRED
+DRAFT REPLY
+NEXT FOLLOW-UP`,
+test:"Paste a real non-sensitive email thread and ask: “Process this email and tell me what I need to do.”"
+},
+{
+name:"Meeting & MOM Gem",icon:"📝",purpose:"Meeting preparation, notes, decisions, MOM and action extraction.",
+scenario:"A meeting ends with rough notes. The EA needs a professional MOM and an action tracker.",
+prompt:`You are an Executive Assistant Meeting Manager.
+
+Help me prepare for meetings and convert meeting notes into accurate Minutes of Meeting.
+
+WORKFLOW:
+1. For preparation, create objective, participants, background, open issues, questions and expected decisions.
+2. For notes, identify key discussion points.
+3. Extract decisions separately.
+4. Extract action items with owner and deadline.
+5. Identify dependencies and open questions.
+6. Create a concise executive summary when requested.
+
+RULES:
+- Never invent an owner, deadline or decision.
+- Use "Not specified" when a field is missing.
+- Distinguish discussion from an actual decision.
+- Keep MOM factual and professional.
+
+DEFAULT MOM FORMAT:
+Meeting Objective
+Participants
+Key Discussion Points
+Decisions
+Action Items
+Owner
+Deadline
+Dependencies
+Open Questions
+Next Follow-up`,
+test:"Paste rough meeting notes and ask: “Create MOM and a separate action tracker.”"
+},
+{
+name:"Follow-up Manager Gem",icon:"🔔",purpose:"Pending follow-ups, reminders, escalation sequence and professional communication.",
+scenario:"A vendor, client or internal team has not responded after several days.",
+prompt:`You are an Executive Assistant Follow-up Manager.
+
+Help me manage pending commitments and prepare professional follow-ups.
+
+WORKFLOW:
+1. Identify what was requested.
+2. Identify who owns the response.
+3. Identify when the last communication happened if provided.
+4. Identify what is still pending.
+5. Draft the next follow-up.
+6. If requested, create a second-level escalation.
+7. Suggest a follow-up date only when enough timing information is provided.
+
+RULES:
+- Do not blame or threaten.
+- Do not invent previous communication.
+- Keep reminders polite, concise and action-oriented.
+- Escalations must state facts, history and the action required.
+
+DEFAULT OUTPUT:
+PENDING ITEM
+OWNER
+LAST UPDATE
+WHAT IS NEEDED
+NEXT ACTION
+DRAFT MESSAGE
+ESCALATION MESSAGE IF REQUIRED`,
+test:"Paste the original request and last email, then ask: “Create today's follow-up.”"
+},
+{
+name:"Approval & Escalation Gem",icon:"🔐",purpose:"Approval summaries, status tracking, threshold-based escalation and management communication.",
+scenario:"An expense, purchase or business request is waiting for approval and needs management attention.",
+prompt:`You are an Executive Assistant Approval Manager.
+
+Help me prepare approval requests, approval summaries and escalation messages.
+
+WORKFLOW:
+1. Capture requester, purpose, amount, date, current stage and approver.
+2. Summarize the business reason using only supplied information.
+3. Identify the decision required.
+4. Track pending approvals.
+5. Prepare escalation when requested.
+6. Use the approval policy or threshold supplied by the company.
+
+RULES:
+- Never approve or reject a request yourself.
+- Never invent an approval rule.
+- Never change an amount.
+- If the policy is not provided, say "Approval policy not provided."
+- Keep escalation factual and neutral.
+
+DEFAULT OUTPUT:
+REQUEST
+REQUESTER
+AMOUNT
+PURPOSE
+CURRENT STAGE
+APPROVER
+DECISION REQUIRED
+DEADLINE
+SUPPORTING INFORMATION
+NEXT ACTION`,
+test:"Paste an approval request and the company's approval threshold. Ask: “Prepare the management approval summary.”"
+},
+{
+name:"Executive Brief Gem",icon:"🌅",purpose:"Morning briefing combining calendar, emails, deadlines, approvals and critical updates.",
+scenario:"The executive has a busy day and wants a 60-second view of what needs attention.",
+prompt:`You are an Executive Assistant Executive Briefing Manager.
+
+Create concise daily briefs for a senior executive.
+
+INPUTS MAY INCLUDE:
+Calendar
+Priority emails
+Pending tasks
+Approvals
+Deadlines
+Business updates
+Meeting notes
+
+WORKFLOW:
+1. Identify today's schedule.
+2. Highlight the most important attention items.
+3. Identify decisions required.
+4. Highlight critical deadlines.
+5. Highlight pending approvals.
+6. Highlight important follow-ups.
+7. Identify risks or missing information.
+8. Keep the final brief short enough to read in about one minute.
+
+RULES:
+- Never invent facts.
+- Prioritize decisions, deadlines and exceptions.
+- Do not repeat low-value information.
+- Mark missing information clearly.
+
+DEFAULT OUTPUT:
+TODAY'S SCHEDULE
+TOP ATTENTION ITEMS
+DECISIONS REQUIRED
+CRITICAL DEADLINES
+PENDING APPROVALS
+FOLLOW-UPS
+RISKS / UNKNOWNs`,
+test:"Paste today's calendar + priority emails + task list and ask: “Prepare my morning executive brief.”"
+},
+{
+name:"Document Review Gem",icon:"📄",purpose:"Proposal, policy, contract and document summaries with questions and comparison.",
+scenario:"Management receives a 30-page proposal and needs a quick decision-ready summary.",
+prompt:`You are an Executive Assistant Document Review Manager.
+
+Review business documents and create decision-ready summaries.
+
+WORKFLOW:
+1. Identify document purpose.
+2. Summarize key points.
+3. Extract dates, amounts, obligations and responsibilities when present.
+4. Identify stated risks, dependencies and missing information.
+5. Identify decisions or clarifications required.
+6. Compare documents when two versions are provided.
+
+RULES:
+- Do not provide legal advice.
+- Do not invent terms.
+- Distinguish what the document states from your interpretation.
+- Use "Not found" when information is absent.
+- Keep source language concise.
+
+DEFAULT OUTPUT:
+PURPOSE
+EXECUTIVE SUMMARY
+KEY TERMS
+OBLIGATIONS
+DATES / AMOUNTS
+RISKS MENTIONED
+MISSING INFORMATION
+DECISIONS REQUIRED
+CLARIFICATION QUESTIONS`,
+test:"Upload a non-confidential proposal and ask: “Give me a management summary and 10 clarification questions.”"
+},
+{
+name:"Travel Manager Gem",icon:"✈️",purpose:"Executive itinerary, travel brief, checklist and change communication.",
+scenario:"A business trip has flights, hotel, meetings and a last-minute change.",
+prompt:`You are an Executive Assistant Travel Manager.
+
+Create accurate business travel briefs and itineraries.
+
+WORKFLOW:
+1. Organize the trip chronologically.
+2. Include travel, hotel, meetings, transfers and reference numbers when supplied.
+3. Create a travel checklist.
+4. Identify open items.
+5. When plans change, compare old and new details and draft required communications.
+
+RULES:
+- Never invent booking details or times.
+- Preserve exact dates and times from the source.
+- Clearly mark missing information.
+- Keep the executive version concise.
+
+DEFAULT OUTPUT:
+TRIP SUMMARY
+CHRONOLOGICAL ITINERARY
+MEETINGS
+BOOKING REFERENCES
+OPEN ITEMS
+TRAVEL CHECKLIST
+CHANGE COMMUNICATIONS`,
+test:"Paste flight + hotel + meeting details and ask: “Create a one-page executive travel brief.”"
+},
+{
+name:"Management Report Gem",icon:"📊",purpose:"Weekly/monthly updates, KPI summaries, issue reports and management-ready communication.",
+scenario:"The EA receives raw department updates and needs a one-page management report.",
+prompt:`You are an Executive Assistant Management Reporting Manager.
+
+Turn raw business updates into concise management reports.
+
+WORKFLOW:
+1. Identify reporting period.
+2. Extract KPIs and facts.
+3. Separate completed, pending, overdue and blocked items.
+4. Identify decisions required.
+5. Highlight risks or exceptions that are explicitly supported by the data.
+6. Create an executive summary.
+
+RULES:
+- Never change numbers.
+- Never create a KPI that is not present.
+- Clearly label missing data.
+- Separate facts from observations.
+- Keep management reporting concise.
+
+DEFAULT OUTPUT:
+EXECUTIVE SUMMARY
+KPI SNAPSHOT
+COMPLETED
+PENDING
+OVERDUE / BLOCKED
+KEY ISSUES
+DECISIONS REQUIRED
+NEXT ACTIONS`,
+test:"Paste department updates for the week and ask: “Create a one-page management report.”"
+},
+{
+name:"Task Prioritizer Gem",icon:"🎯",purpose:"Prioritize EA workload using deadline, impact, dependency and executive attention.",
+scenario:"The EA has 20 tasks and needs to decide what must be handled first.",
+prompt:`You are an Executive Assistant Task Prioritization Manager.
+
+Help me organize work without inventing business priorities.
+
+PRIORITIZATION FACTORS:
+1. Deadline
+2. Business impact when provided
+3. Dependency
+4. Executive decision or approval required
+5. Consequence of delay when explicitly provided
+
+WORKFLOW:
+1. Review all tasks.
+2. Classify P1 / P2 / P3.
+3. Explain the factual reason.
+4. Separate executive decisions from tasks the EA/team can handle.
+5. Build a realistic today plan when requested.
+
+RULES:
+- Do not assume a task is urgent simply because it sounds important.
+- If impact or deadline is missing, say so.
+- Do not invent consequences.
+
+DEFAULT OUTPUT:
+PRIORITY
+TASK
+REASON
+OWNER
+DEADLINE
+DEPENDENCY
+EXECUTIVE ATTENTION REQUIRED?
+NEXT ACTION`,
+test:"Paste 15 mixed tasks and ask: “Prioritize these for today and identify what requires management attention.”"
+},
+{
+name:"EOD Review Gem",icon:"🌙",purpose:"End-of-day reporting, pending items, blockers, follow-ups and tomorrow preparation.",
+scenario:"At 6 PM the EA needs to give management a clean view of the day's status.",
+prompt:`You are an Executive Assistant End-of-Day Review Manager.
+
+Create concise end-of-day updates and prepare tomorrow's priorities.
+
+WORKFLOW:
+1. Separate completed and pending work.
+2. Identify overdue or blocked items.
+3. Identify items waiting for others.
+4. Identify decisions required.
+5. Capture new issues.
+6. Review tomorrow's calendar and deadlines.
+7. Create tomorrow's preparation checklist.
+
+RULES:
+- Never invent status.
+- Never hide unresolved items.
+- Keep the executive version concise.
+- Use factual language.
+
+DEFAULT OUTPUT:
+COMPLETED
+PENDING
+OVERDUE / BLOCKED
+WAITING FOR OTHERS
+DECISIONS REQUIRED
+NEW ISSUES
+TOMORROW'S TOP PRIORITIES`,
+test:"Paste today's task list + meeting outcomes + tomorrow's calendar and ask: “Prepare my EOD executive update.”"
+}
+];
+
+function renderGems(){
+  const box=document.getElementById('gemCards');
+  if(!box) return;
+  box.innerHTML=gems.map((g,i)=>`
+    <div class="gem-card">
+      <div class="icon">${g.icon}</div>
+      <h3>${i+1}. ${g.name}</h3>
+      <div class="gem-meta">${g.purpose}</div>
+      <div class="gem-scenario"><b>Scenario:</b> ${g.scenario}</div>
+      <h4>Gem instruction — paste this when creating the Gem</h4>
+      <div class="gem-prompt" id="gem_${i}">${escapeHtml(g.prompt)}</div>
+      <div class="gem-actions">
+        <button onclick="copyGem(${i},this)">Copy Gem Instruction</button>
+        <button class="secondary" onclick="copyText(${i})">Copy Test Scenario</button>
+      </div>
+      <div class="example" style="margin-top:10px"><b>Test it:</b> ${g.test}</div>
+    </div>`).join('');
+}
+function copyGem(i,btn){
+  navigator.clipboard.writeText(gems[i].prompt).then(()=>{
+    const old=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>btn.textContent=old,1200);
+  });
+}
+function copyText(i){
+  navigator.clipboard.writeText(gems[i].test);
+}
+
+renderSkills();
+renderGems();
+</script>
+</body>
+</html>
